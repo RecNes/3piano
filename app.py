@@ -62,6 +62,7 @@ def upload():
 
 
 @app.route('/fetch/<country_code>/')
+@app.route('/fetch/')
 def fetch_city(country_code=None):
     success = False
     rows = []
