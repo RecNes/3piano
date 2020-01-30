@@ -61,32 +61,38 @@ def upload():
     })
 
 
-@app.route('/fetch/<country_code>/')
+@app.route('/fetch/<country_code>/', methods=['GET'])
 @app.route('/fetch/')
 def fetch_city(country_code=None):
     success = False
-    rows = []
-    if country_code is None or not country_code:
-        return jsonify({
-            'status': success,
-            'data': rows,
-            'message': 'You have to specify country code; Eg. http://example.com/fetch/us/'
-        })
-
-    with sqlite3.connect(DB_NAME) as con:
-        cur = con.cursor()
-        cur.execute(
-            "SELECT city_name FROM '3piano_cities' WHERE country_code=?", (country_code.lower(), ))
-        rows = cur.fetchall()
-
     data = []
-    for row in rows:
-        data.append(row[0])
-    success = True
+    result_text = 'You have to specify country code; Eg. http://example.com/fetch/us/'
+
+    if request.method == 'GET':
+        rows = []
+        if country_code is None or not country_code:
+            return jsonify({
+                'status': success,
+                'data': rows,
+                'message': result_text
+            })
+
+        with sqlite3.connect(DB_NAME) as con:
+            cur = con.cursor()
+            cur.execute(
+                "SELECT city_name FROM '3piano_cities' WHERE country_code=?", (country_code.lower(), ))
+            rows = cur.fetchall()
+
+        data = []
+        for row in rows:
+            data.append(row[0])
+        success = True
+        result_text = ''
+
     return jsonify({
             'status': success,
             'data': data,
-            'message': ''
+            'message': result_text
         })
 
 
