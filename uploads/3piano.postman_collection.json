@@ -6,12 +6,33 @@
 	},
 	"item": [
 		{
-			"name": "upload_file",
+			"name": "upload file",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch cities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/fetch/us/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"fetch",
+						"us",
+						""
+					]
 				}
 			},
 			"response": []
